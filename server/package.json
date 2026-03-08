@@ -1,0 +1,35 @@
+{
+  "name": "dishdrop-server",
+  "version": "1.0.0",
+  "description": "DishDrop — Food Delivered Fast | Backend Server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "latest",
+    "firebase-admin": "latest",
+    "groq-sdk": "latest",
+    "cloudinary": "latest",
+    "multer": "latest",
+    "multer-storage-cloudinary": "latest",
+    "razorpay": "latest",
+    "cors": "latest",
+    "dotenv": "latest",
+    "node-cron": "latest",
+    "nodemailer": "latest",
+    "uuid": "latest",
+    "express-async-errors": "latest",
+    "bcryptjs": "latest",
+    "jsonwebtoken": "latest"
+  },
+  "devDependencies": {
+    "nodemon": "latest"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "DishDrop Team",
+  "license": "MIT"
+}

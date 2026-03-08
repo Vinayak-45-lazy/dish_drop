@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#FF4500" />
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="DishDrop — Food Delivered Fast. Order from the best restaurants near you. Fresh. Fast. Delivered."
+    />
+    <meta name="keywords" content="food delivery, order food online, restaurants, DishDrop" />
+    <meta name="author" content="DishDrop" />
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DishDrop — Food Delivered Fast" />
+    <meta
+      property="og:description"
+      content="Order from the best restaurants near you. Fresh. Fast. Delivered."
+    />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DishDrop — Food Delivered Fast" />
+    <meta
+      name="twitter:description"
+      content="Order from the best restaurants near you. Fresh. Fast. Delivered."
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Leaflet CSS — Required for maps -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+
+    <!-- Razorpay Checkout Script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <title>DishDrop — Food Delivered Fast</title>
+
+    <style>
+      /* ===============================================
+         GLOBAL BASE STYLES
+         =============================================== */
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+        background-color: #f8f8f8;
+        color: #1a1a1a;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Scrollbar Styling */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #ff4500;
+        border-radius: 3px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #e03d00;
+      }
+
+      /* Selection Color */
+      ::selection {
+        background: #ff4500;
+        color: white;
+      }
+
+      /* ===============================================
+         LOADING SCREEN
+         Shown before React mounts
+         =============================================== */
+
+      #initial-loader {
+        position: fixed;
+        inset: 0;
+        background: #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.3s ease;
+      }
+
+      #initial-loader .logo {
+        font-size: 2.5rem;
+        font-weight: 900;
+        color: #ff4500;
+        letter-spacing: -1px;
+        margin-bottom: 8px;
+      }
+
+      #initial-loader .tagline {
+        font-size: 0.9rem;
+        color: #888;
+        margin-bottom: 32px;
+        letter-spacing: 0.5px;
+      }
+
+      #initial-loader .spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid #f0f0f0;
+        border-top: 3px solid #ff4500;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      /* ===============================================
+         CONFETTI ANIMATION
+         Shown after successful payment
+         =============================================== */
+
+      @keyframes confetti-fall {
+        0% {
+          transform: translateY(-100px) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      .confetti-piece {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        top: -10px;
+        animation: confetti-fall linear forwards;
+        z-index: 9999;
+        pointer-events: none;
+      }
+
+      /* ===============================================
+         LEAFLET MAP OVERRIDES
+         =============================================== */
+
+      .leaflet-container {
+        border-radius: 16px;
+        z-index: 1;
+      }
+
+      .leaflet-popup-content-wrapper {
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .leaflet-popup-tip {
+        background: white;
+      }
+
+      /* ===============================================
+         SMOOTH PAGE TRANSITIONS
+         =============================================== */
+
+      .page-enter {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      .page-enter-active {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 300ms ease, transform 300ms ease;
+      }
+
+      .page-exit {
+        opacity: 1;
+      }
+
+      .page-exit-active {
+        opacity: 0;
+        transition: opacity 200ms ease;
+      }
+
+      /* ===============================================
+         UTILITY CLASSES
+         =============================================== */
+
+      .line-clamp-1 {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* ===============================================
+         REACT HOT TOAST OVERRIDES
+         =============================================== */
+
+      .react-hot-toast {
+        font-family: "Inter", sans-serif !important;
+      }
+
+      /* ===============================================
+         MOBILE BOTTOM NAV SAFE AREA
+         =============================================== */
+
+      @supports (padding-bottom: env(safe-area-inset-bottom)) {
+        .mobile-nav {
+          padding-bottom: env(safe-area-inset-bottom);
+        }
+      }
+
+      /* ===============================================
+         HIDE INITIAL LOADER AFTER REACT MOUNTS
+         =============================================== */
+
+      #root:not(:empty) ~ #initial-loader {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <noscript>
+      You need to enable JavaScript to run DishDrop.
+    </noscript>
+
+    <!-- React Root -->
+    <div id="root"></div>
+
+    <!-- Initial Loading Screen (before React mounts) -->
+    <div id="initial-loader">
+      <div class="logo">🍽️ DishDrop</div>
+      <div class="tagline">Fresh. Fast. Delivered.</div>
+      <div class="spinner"></div>
+    </div>
+  </body>
+</html>

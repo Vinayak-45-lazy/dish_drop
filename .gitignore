@@ -1,0 +1,78 @@
+# ===================================================
+# DISHDROP — .gitignore
+# ===================================================
+
+# Environment Variables — NEVER commit these
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Firebase Service Account Key (if saved as file)
+serviceAccountKey.json
+firebase-adminsdk*.json
+*-firebase-adminsdk-*.json
+
+# Node Modules
+node_modules/
+*/node_modules/
+
+# Build Outputs
+client/build/
+client/dist/
+server/dist/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Package Lock (keep yarn.lock OR package-lock.json, not both)
+# Uncomment the one you don't use:
+# package-lock.json
+# yarn.lock
+
+# React
+client/.env
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Uploads (local temp uploads before Cloudinary)
+uploads/
+server/uploads/
+
+# Render / Vercel
+.vercel/
+.render/
